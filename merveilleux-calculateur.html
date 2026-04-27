@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aux Merveilleux de Fred — Plaquage Cramique</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --noir: #0e0c0a;
+    --noir-2: #1a1714;
+    --noir-3: #252118;
+    --or: #c9a96e;
+    --or-light: #e8d4a8;
+    --or-pale: #f5ead2;
+    --creme: #f0e8d8;
+    --blanc: #faf6ef;
+    --choco: #3b1f0f;
+    --choco-light: #6b3a1f;
+    --sucre: #e8d4a8;
+    --raisin: #7a3e2a;
+    --text-muted: #8a7d6a;
+    --border: rgba(201,169,110,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--noir);
+    color: var(--creme);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.1s;
+  }
+
+  .ornament-line {
+    height: 1px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--or));
+  }
+  .ornament-line.right {
+    background: linear-gradient(90deg, var(--or), transparent);
+  }
+
+  .ornament-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--or);
+    transform: rotate(45deg);
+  }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--blanc);
+    line-height: 1;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .brand-name em {
+    font-style: italic;
+    color: var(--or);
+  }
+
+  .brand-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.35s;
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--or-light);
+    margin-top: 1.8rem;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.6s;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* INPUTS */
+  .inputs-section {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.7s;
+  }
+
+  .inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .input-card {
+    background: var(--noir-2);
+    border: 1px solid var(--border);
+    padding: 1.4rem 1.4rem 1.2rem;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .input-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .input-card.choco::before { background: var(--choco-light); }
+  .input-card.sucre::before { background: var(--or); }
+  .input-card.raisin::before { background: var(--raisin); }
+
+  .input-card:focus-within {
+    border-color: rgba(201,169,110,0.5);
+  }
+
+  .input-card label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .parfum-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--creme);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .input-card input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--blanc);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    padding: 0.2rem 0 0.4rem;
+    outline: none;
+    -moz-appearance: textfield;
+    transition: border-color 0.3s;
+  }
+  .input-card input::-webkit-outer-spin-button,
+  .input-card input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .input-card input:focus { border-bottom-color: var(--or); }
+
+  .input-unit {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* BUTTON */
+  .calc-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 1px solid var(--or);
+    color: var(--or);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s;
+  }
+
+  .calc-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--or);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.77,0,0.175,1);
+  }
+
+  .calc-btn:hover::before { transform: scaleX(1); }
+  .calc-btn:hover { color: var(--noir); }
+  .calc-btn span { position: relative; z-index: 1; }
+
+  /* RESULTS */
+  .results {
+    margin-top: 3.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    pointer-events: none;
+  }
+
+  .results.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .results-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--or);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .results-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .plaques-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .plaque-card {
+    background: var(--noir-2);
+    border: 1px solid var(--border);
+    padding: 1.6rem 1.4rem 1.4rem;
+    position: relative;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+
+  .plaque-card.active { border-color: rgba(201,169,110,0.5); }
+  .plaque-card.inactive { opacity: 0.35; }
+
+  .plaque-step {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .plaque-nb {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--blanc);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .plaque-nb span {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    vertical-align: super;
+  }
+
+  .plaque-type {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--or-light);
+    margin-bottom: 0.8rem;
+  }
+
+  .plaque-recipe {
+    display: inline-flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .recipe-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 1px solid;
+  }
+
+  .recipe-tag.c { border-color: var(--choco-light); color: #c47a4a; }
+  .recipe-tag.s { border-color: rgba(201,169,110,0.4); color: var(--or-light); }
+  .recipe-tag.r { border-color: rgba(122,62,42,0.6); color: #c47a6a; }
+
+  .plaque-detail {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    border-top: 1px solid var(--border);
+    padding-top: 0.8rem;
+    margin-top: 0.6rem;
+    line-height: 1.6;
+  }
+
+  /* TOTAL BAR */
+  .total-section {
+    background: var(--noir-3);
+    border: 1px solid rgba(201,169,110,0.4);
+    padding: 1.6rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .total-left {}
+  .total-left .total-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .total-nb {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.2rem;
+    font-weight: 300;
+    color: var(--or);
+    line-height: 1;
+  }
+
+  .total-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  .total-right {
+    text-align: right;
+  }
+
+  .total-breakdown {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  .total-breakdown strong {
+    color: var(--creme);
+    font-weight: 400;
+  }
+
+  /* SURPLUS */
+  .surplus-section {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .surplus-pill {
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-family: 'Jost', sans-serif;
+  }
+
+  .surplus-pill.warn {
+    border-color: rgba(196,122,74,0.5);
+    color: #c47a4a;
+    background: rgba(59,31,15,0.3);
+  }
+
+  .surplus-pill.ok {
+    border-color: rgba(201,169,110,0.3);
+    color: var(--or-light);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  footer .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    color: var(--or);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* VISUAL PLATE */
+  .plaque-visual { margin: 0.8rem 0 0.6rem; }
+  .plaque-visual-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .plaque-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+  .slot {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    border: 1px solid rgba(107,58,31,0.4);
+    background: rgba(59,31,15,0.25);
+    transition: background 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .slot.filled {
+    background: var(--choco-light);
+    border-color: rgba(107,58,31,0.8);
+  }
+  .slot.filled::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 60%);
+  }
+  .slot.empty {
+    background: rgba(59,31,15,0.12);
+    border-color: rgba(107,58,31,0.25);
+    border-style: dashed;
+  }
+  .incomplete-badge {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid rgba(196,122,74,0.5);
+    color: #c47a4a;
+    background: rgba(59,31,15,0.3);
+  }
+  .complete-badge {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--or-light);
+  }
+
+  @media (max-width: 600px) {
+    .inputs-grid, .plaques-grid { grid-template-columns: 1fr; }
+    .total-section { grid-template-columns: 1fr; }
+    .total-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line right"></div>
+  </div>
+  <h1 class="brand-name">Aux Merveilleux <em>de Fred</em></h1>
+  <p class="brand-sub">Maison fondée à Lille &nbsp;·&nbsp; Artisan depuis 1997</p>
+  <p class="page-title">Calculateur de plaquage — Cramique en pousse</p>
+</header>
+
+<main>
+
+  <p class="section-label">Stock disponible</p>
+
+  <div class="inputs-section">
+    <div class="inputs-grid">
+      <div class="input-card choco">
+        <label>Parfum 01</label>
+        <span class="parfum-name">Chocolat</span>
+        <input type="number" id="in-choco" min="0" value="98" placeholder="0" />
+        <span class="input-unit">pièces</span>
+      </div>
+      <div class="input-card sucre">
+        <label>Parfum 02</label>
+        <span class="parfum-name">Sucre</span>
+        <input type="number" id="in-sucre" min="0" value="79" placeholder="0" />
+        <span class="input-unit">pièces</span>
+      </div>
+      <div class="input-card raisin">
+        <label>Parfum 03</label>
+        <span class="parfum-name">Raisin-Sucre</span>
+        <input type="number" id="in-raisin" min="0" value="11" placeholder="0" />
+        <span class="input-unit">pièces</span>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">
+      <span>Optimiser les plaques</span>
+    </button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <p class="results-label" style="margin-top:0">Répartition optimisée</p>
+
+    <div class="plaques-grid">
+      <div class="plaque-card" id="card-s1">
+        <div class="plaque-step">Étape 1</div>
+        <div class="plaque-nb" id="nb-s1">—</div>
+        <div class="plaque-type">Plaques standard</div>
+        <div class="plaque-recipe">
+          <span class="recipe-tag c">3 Choco</span>
+          <span class="recipe-tag s">2 Sucre</span>
+          <span class="recipe-tag r">1 Raisin</span>
+        </div>
+        <div class="plaque-detail" id="det-s1">—</div>
+      </div>
+      <div class="plaque-card" id="card-s2">
+        <div class="plaque-step">Étape 2</div>
+        <div class="plaque-nb" id="nb-s2">—</div>
+        <div class="plaque-type">Plaques mixtes</div>
+        <div class="plaque-recipe">
+          <span class="recipe-tag c">3 Choco</span>
+          <span class="recipe-tag s">3 Sucre</span>
+        </div>
+        <div class="plaque-detail" id="det-s2">—</div>
+      </div>
+      <div class="plaque-card" id="card-s3">
+        <div class="plaque-step">Étape 3</div>
+        <div class="plaque-nb" id="nb-s3">—</div>
+        <div class="plaque-type">Plaques chocolat</div>
+        <div class="plaque-recipe">
+          <span class="recipe-tag c">6 Choco</span>
+        </div>
+        <div class="plaque-detail" id="det-s3">—</div>
+        <div class="plaque-visual" id="visual-s3" style="display:none">
+          <div class="plaque-visual-label">Dernière plaque</div>
+          <div class="plaque-slots" id="slots-s3"></div>
+          <div id="badge-s3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="total-section">
+      <div class="total-left">
+        <div class="total-label">Total plaques</div>
+        <div class="total-nb" id="total-nb">—</div>
+        <div class="total-sub" id="total-sub">—</div>
+      </div>
+      <div class="total-right">
+        <div class="total-breakdown" id="total-breakdown">—</div>
+      </div>
+    </div>
+
+    <div class="surplus-section" id="surplus-section"></div>
+
+  </div>
+
+</main>
+
+<footer>
+  <span class="footer-brand">Aux Merveilleux de Fred</span>
+  Outil interne de gestion de production
+</footer>
+
+<script>
+function calculate() {
+  let choco = parseInt(document.getElementById('in-choco').value) || 0;
+  let sucre = parseInt(document.getElementById('in-sucre').value) || 0;
+  let raisin = parseInt(document.getElementById('in-raisin').value) || 0;
+
+  // Étape 1 : 3C + 2S + 1RS
+  let p1 = raisin;
+  let c1 = p1 * 3, s1 = p1 * 2;
+  choco -= c1; sucre -= s1;
+  choco = Math.max(0, choco); sucre = Math.max(0, sucre);
+
+  // Étape 2 : 3C + 3S
+  let p2 = Math.floor(Math.min(sucre / 3, choco / 3));
+  let c2 = p2 * 3, s2 = p2 * 3;
+  choco -= c2; sucre -= s2;
+  choco = Math.max(0, choco); sucre = Math.max(0, sucre);
+
+  // Étape 3 : 6C
+  let fullP3 = Math.floor(choco / 6);
+  let leftoverC = choco - (fullP3 * 6);
+  let p3 = fullP3 + (leftoverC > 0 ? 1 : 0);
+
+  let total = p1 + p2 + p3;
+  let totalPieces = p1 * 6 + p2 * 6 + fullP3 * 6 + leftoverC;
+
+  // Affichage
+  let res = document.getElementById('results');
+  res.classList.add('visible');
+
+  function setCard(id, nb, det, active) {
+    let card = document.getElementById('card-' + id);
+    card.classList.remove('active', 'inactive');
+    card.classList.add(active ? 'active' : 'inactive');
+    document.getElementById('nb-' + id).textContent = nb > 0 ? nb : '0';
+    document.getElementById('det-' + id).textContent = det;
+  }
+
+  setCard('s1', p1,
+    p1 > 0 ? p1 + ' × (3C + 2S + 1RS)\n= ' + (p1*3) + ' choco · ' + (p1*2) + ' sucre · ' + p1 + ' raisin' : 'Aucun raisin-sucre disponible',
+    p1 > 0
+  );
+
+  setCard('s2', p2,
+    p2 > 0 ? p2 + ' × (3C + 3S)\n= ' + (p2*3) + ' choco · ' + (p2*3) + ' sucre' : 'Pas de sucre restant',
+    p2 > 0
+  );
+
+  setCard('s3', p3,
+    p3 > 0 ? fullP3 + ' plaque(s) complète(s)' + (leftoverC > 0 ? ' + 1 incomplète' : '') : 'Aucun chocolat restant',
+    p3 > 0
+  );
+
+  // Visual plate for s3
+  let visual = document.getElementById('visual-s3');
+  let slotsEl = document.getElementById('slots-s3');
+  let badgeEl = document.getElementById('badge-s3');
+  if (p3 > 0) {
+    visual.style.display = 'block';
+    slotsEl.innerHTML = '';
+    let lastFill = leftoverC > 0 ? leftoverC : 6;
+    for (let i = 0; i < 6; i++) {
+      let s = document.createElement('div');
+      s.className = 'slot ' + (i < lastFill ? 'filled' : 'empty');
+      slotsEl.appendChild(s);
+    }
+    if (leftoverC > 0) {
+      badgeEl.innerHTML = '<span class="incomplete-badge">Incomplète : ' + leftoverC + ' / 6</span>';
+    } else {
+      badgeEl.innerHTML = '<span class="complete-badge">Toutes complètes</span>';
+    }
+  } else {
+    visual.style.display = 'none';
+  }
+
+  document.getElementById('total-nb').textContent = total;
+  document.getElementById('total-sub').textContent = total + ' plaque' + (total > 1 ? 's' : '') + ' de 6';
+
+  let bd = '';
+  if (p1 > 0) bd += '<div>' + p1 + ' standard &nbsp;<strong>' + p1 + ' pl.</strong></div>';
+  if (p2 > 0) bd += '<div>' + p2 + ' mixte' + (p2>1?'s':'') + ' &nbsp;<strong>' + p2 + ' pl.</strong></div>';
+  if (p3 > 0) bd += '<div>' + p3 + ' chocolat &nbsp;<strong>' + p3 + ' pl.</strong></div>';
+  document.getElementById('total-breakdown').innerHTML = bd;
+
+  // Surplus
+  let sp = document.getElementById('surplus-section');
+  sp.innerHTML = '';
+
+  if (leftoverC === 0 && sucre === 0) {
+    sp.innerHTML = '<div class="surplus-pill ok">— Aucun surplus, tout est placé</div>';
+  } else {
+    if (leftoverC > 0) {
+      sp.innerHTML += '<div class="surplus-pill warn">Chocolat : ' + leftoverC + ' pièce' + (leftoverC>1?'s':'') + ' non placée' + (leftoverC>1?'s':'') + ' (dernière plaque incomplète)</div>';
+    }
+    if (sucre > 0) {
+      sp.innerHTML += '<div class="surplus-pill warn">Sucre : ' + sucre + ' pièce' + (sucre>1?'s':'') + ' en surplus</div>';
+    }
+  }
+}
+
+// Auto-calculate on load
+window.addEventListener('load', calculate);
+
+// Live recalc on input
+['in-choco','in-sucre','in-raisin'].forEach(id => {
+  document.getElementById(id).addEventListener('input', calculate);
+});
+</script>
+
+</body>
+</html>
