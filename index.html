@@ -3,762 +3,338 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aux Merveilleux de Fred — Plaquage Cramique</title>
+<title>Aux Merveilleux de Fred — Planning Semaine</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
   :root {
-    --noir: #0e0c0a;
-    --noir-2: #1a1714;
-    --noir-3: #252118;
-    --or: #c9a96e;
-    --or-light: #e8d4a8;
-    --or-pale: #f5ead2;
-    --creme: #f0e8d8;
-    --blanc: #faf6ef;
-    --choco: #3b1f0f;
-    --choco-light: #6b3a1f;
-    --sucre: #e8d4a8;
-    --raisin: #7a3e2a;
-    --text-muted: #8a7d6a;
-    --border: rgba(201,169,110,0.2);
+    --noir: #0e0c0a; --noir-2: #1a1714; --noir-3: #252118;
+    --or: #c9a96e; --or-light: #e8d4a8; --creme: #f0e8d8; --blanc: #faf6ef;
+    --choco-light: #6b3a1f; --text-muted: #8a7d6a; --border: rgba(201,169,110,0.2);
+    --warn: #c47a4a;
   }
- 
-  html { scroll-behavior: smooth; }
- 
-  body {
-    background: var(--noir);
-    color: var(--creme);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
- 
-  /* Grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.6;
-  }
+  body { background: var(--noir); color: var(--creme); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 999; opacity: 0.6; }
  
   /* HEADER */
-  header {
-    text-align: center;
-    padding: 4rem 2rem 3rem;
-    position: relative;
-    border-bottom: 1px solid var(--border);
-  }
+  header { text-align: center; padding: 2.5rem 2rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .header-ornament { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
+  .ornament-line { height: 1px; width: 50px; background: linear-gradient(90deg, transparent, var(--or)); }
+  .ornament-line.right { background: linear-gradient(90deg, var(--or), transparent); }
+  .ornament-diamond { width: 5px; height: 5px; background: var(--or); transform: rotate(45deg); }
+  .brand-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; letter-spacing: 0.08em; color: var(--blanc); line-height: 1; }
+  .brand-name em { font-style: italic; color: var(--or); }
+  .brand-sub { font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem; }
  
-  .header-ornament {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.1s;
-  }
- 
-  .ornament-line {
-    height: 1px;
-    width: 60px;
-    background: linear-gradient(90deg, transparent, var(--or));
-  }
-  .ornament-line.right {
-    background: linear-gradient(90deg, var(--or), transparent);
-  }
- 
-  .ornament-diamond {
-    width: 6px;
-    height: 6px;
-    background: var(--or);
-    transform: rotate(45deg);
-  }
- 
-  .brand-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    color: var(--blanc);
-    line-height: 1;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.2s;
-  }
- 
-  .brand-name em {
-    font-style: italic;
-    color: var(--or);
-  }
- 
-  .brand-sub {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 0.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.35s;
-  }
- 
-  .page-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--or-light);
-    margin-top: 1.8rem;
-    letter-spacing: 0.05em;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.5s;
-  }
+  /* NAV */
+  .nav-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 2rem; }
+  .nav-tab { padding: 0.75rem 1.6rem; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.3s, border-color 0.3s; margin-bottom: -1px; }
+  .nav-tab.active { color: var(--or); border-bottom-color: var(--or); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
  
   /* MAIN */
-  main {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 3rem 2rem 5rem;
+  main { max-width: 1140px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+  .section-label { font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--or); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+ 
+  /* SAISIE GRID */
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 2rem; }
+  .day-card { background: var(--noir-2); border: 1px solid var(--border); padding: 1rem 0.75rem 1.1rem; transition: border-color 0.3s; }
+  .day-card:focus-within { border-color: rgba(201,169,110,0.45); }
+  .day-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--or-light); text-align: center; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  .day-field { margin-bottom: 0.5rem; }
+  .day-field label { display: block; font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+  .field-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+  .dot-c { background: #c47a4a; } .dot-s { background: var(--or); } .dot-r { background: #c47a6a; }
+  .day-field input { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(201,169,110,0.15); color: var(--blanc); font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; padding: 2px 0; outline: none; -moz-appearance: textfield; text-align: center; transition: border-color 0.3s; }
+  .day-field input::-webkit-outer-spin-button, .day-field input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .day-field input:focus { border-bottom-color: var(--or); }
+ 
+  /* PLANNING TABLE */
+  .planning-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+ 
+  /* Header row */
+  .th-creneau { width: 110px; }
+  thead tr.head-jours th { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--or-light); padding: 0.6rem 0.5rem 0.4rem; text-align: center; border-bottom: 1px solid var(--border); letter-spacing: 0.04em; }
+  thead tr.head-jours th.th-creneau { font-family: 'Jost', sans-serif; font-style: normal; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); text-align: left; }
+  thead tr.head-jours th.th-nextweek { border-left: 1px solid rgba(201,169,110,0.35); color: var(--or); }
+  tbody td.td-nextweek { border-left: 1px solid rgba(201,169,110,0.2); }
+  .day-card.nextweek { border-color: rgba(201,169,110,0.4); }
+  .day-card.nextweek .day-name { color: var(--or); }
+  thead tr.head-besoin th { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); padding: 0.3rem 0.5rem 0.6rem; text-align: center; border-bottom: 1px solid rgba(201,169,110,0.3); }
+  thead tr.head-besoin th.th-creneau { text-align: left; }
+  .besoin-val { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--creme); display: block; }
+ 
+  /* Body rows */
+  tbody tr { border-bottom: 1px solid rgba(201,169,110,0.07); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 0.7rem 0.5rem; text-align: center; vertical-align: middle; }
+  td.cr-label { text-align: left; padding-left: 0; }
+  .cr-time { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--or); display: block; line-height: 1; }
+  .cr-desc { font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); display: block; margin-top: 2px; }
+ 
+  /* Cells */
+  .cell-empty { color: rgba(138,125,106,0.25); font-size: 0.9rem; }
+  .cell-block { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; }
+  .cell-nb { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--blanc); line-height: 1; }
+  .cell-type { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border: 1px solid; }
+  .type-m  { color: #e0956a; border-color: rgba(196,122,74,0.45); background: rgba(59,31,15,0.2); }
+  .type-sc { color: var(--or-light); border-color: rgba(201,169,110,0.35); background: rgba(201,169,110,0.04); }
+  .type-c  { color: #c08060; border-color: rgba(107,58,31,0.5); background: rgba(59,31,15,0.18); }
+  .cell-extra { font-size: 0.58rem; color: var(--warn); border: 1px solid rgba(196,122,74,0.4); padding: 1px 6px; margin-top: 1px; }
+  .cell-warn { font-size: 0.56rem; color: var(--warn); margin-top: 2px; }
+ 
+  /* TOTAL ROW */
+  .row-total td { background: var(--noir-3); border-top: 1px solid rgba(201,169,110,0.25) !important; padding: 0.8rem 0.5rem; }
+  .total-nb { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--or); line-height: 1; display: block; }
+  .total-sub { font-size: 0.56rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+ 
+  /* LEGENDE */
+  .legende { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 0.62rem; color: var(--text-muted); }
+  .leg-dot { width: 7px; height: 7px; border-radius: 50%; }
+ 
+  /* PRINT BTN */
+  .btn-row { display: flex; justify-content: flex-end; margin-bottom: 1.5rem; }
+  .print-btn { background: transparent; border: 1px solid var(--or); color: var(--or); font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.75rem 1.8rem; cursor: pointer; position: relative; overflow: hidden; transition: color 0.4s; }
+  .print-btn::before { content: ''; position: absolute; inset: 0; background: var(--or); transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.77,0,0.175,1); }
+  .print-btn:hover::before { transform: scaleX(1); }
+  .print-btn:hover { color: var(--noir); }
+  .print-btn span { position: relative; z-index: 1; }
+ 
+  /* PRINT */
+  @media print {
+    body { background: white !important; color: black !important; }
+    body::before { display: none; }
+    header { border-bottom: 2px solid #c9a96e; padding: 0.8rem; }
+    .brand-name { color: black !important; font-size: 1.8rem; }
+    .brand-name em { color: #9a7040 !important; }
+    .nav-tabs, .week-grid, .print-btn, .btn-row, .legende, #tab-saisie { display: none !important; }
+    #tab-planning { display: block !important; }
+    .section-label { color: #9a7040; }
+    .section-label::after { background: #ddd; }
+    thead tr.head-jours th { color: #333; border-bottom: 1px solid #c9a96e; }
+    thead tr.head-besoin th { color: #666; border-bottom: 1px solid #ddd; }
+    .besoin-val { color: #222; }
+    tbody tr { border-bottom: 1px solid #eee; }
+    td.cr-label .cr-time { color: #9a7040; }
+    td.cr-label .cr-desc { color: #999; }
+    .cell-nb { color: #111; }
+    .type-m { color: #8B4513; border-color: #c47a4a; background: #fff8f4; }
+    .type-sc { color: #7a6010; border-color: #c9a96e; background: #fffbf0; }
+    .type-c { color: #4a2000; border-color: #8B4513; background: #fff5ee; }
+    .row-total td { background: #f7f3eb; }
+    .total-nb { color: #9a7040; }
+    .total-sub { color: #888; }
+    .cell-warn { color: #c0392b; }
+    .cell-extra { color: #c0392b; border-color: #c0392b; }
+    main { padding: 0.5rem; }
   }
  
-  /* SECTION LABEL */
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--or);
-    margin-bottom: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.6s;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
- 
-  /* INPUTS */
-  .inputs-section {
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.7s;
-  }
- 
-  .inputs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 2rem;
-  }
- 
-  .input-card {
-    background: var(--noir-2);
-    border: 1px solid var(--border);
-    padding: 1.4rem 1.4rem 1.2rem;
-    position: relative;
-    transition: border-color 0.3s;
-  }
- 
-  .input-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px;
-    height: 100%;
-  }
- 
-  .input-card.choco::before { background: var(--choco-light); }
-  .input-card.sucre::before { background: var(--or); }
-  .input-card.raisin::before { background: var(--raisin); }
- 
-  .input-card:focus-within {
-    border-color: rgba(201,169,110,0.5);
-  }
- 
-  .input-card label {
-    display: block;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.8rem;
-  }
- 
-  .parfum-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    font-weight: 400;
-    color: var(--creme);
-    display: block;
-    margin-bottom: 0.8rem;
-  }
- 
-  .input-card input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border);
-    color: var(--blanc);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem;
-    font-weight: 300;
-    padding: 0.2rem 0 0.4rem;
-    outline: none;
-    -moz-appearance: textfield;
-    transition: border-color 0.3s;
-  }
-  .input-card input::-webkit-outer-spin-button,
-  .input-card input::-webkit-inner-spin-button { -webkit-appearance: none; }
-  .input-card input:focus { border-bottom-color: var(--or); }
- 
-  .input-unit {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-top: 0.4rem;
-    display: block;
-  }
- 
-  /* BUTTON */
-  .calc-btn {
-    width: 100%;
-    padding: 1rem 2rem;
-    background: transparent;
-    border: 1px solid var(--or);
-    color: var(--or);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: color 0.4s;
-  }
- 
-  .calc-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--or);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.77,0,0.175,1);
-  }
- 
-  .calc-btn:hover::before { transform: scaleX(1); }
-  .calc-btn:hover { color: var(--noir); }
-  .calc-btn span { position: relative; z-index: 1; }
- 
-  /* RESULTS */
-  .results {
-    margin-top: 3.5rem;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    pointer-events: none;
-  }
- 
-  .results.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
-  }
- 
-  .results-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--or);
-    margin-bottom: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .results-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
- 
-  .plaques-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 2rem;
-  }
- 
-  .plaque-card {
-    background: var(--noir-2);
-    border: 1px solid var(--border);
-    padding: 1.6rem 1.4rem 1.4rem;
-    position: relative;
-    text-align: center;
-    transition: border-color 0.3s;
-  }
- 
-  .plaque-card.active { border-color: rgba(201,169,110,0.5); }
-  .plaque-card.inactive { opacity: 0.35; }
- 
-  .plaque-step {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.8rem;
-  }
- 
-  .plaque-nb {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4rem;
-    font-weight: 300;
-    color: var(--blanc);
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
- 
-  .plaque-nb span {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    vertical-align: super;
-  }
- 
-  .plaque-type {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--or-light);
-    margin-bottom: 0.8rem;
-  }
- 
-  .plaque-recipe {
-    display: inline-flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 0.8rem;
-  }
- 
-  .recipe-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    padding: 3px 8px;
-    border: 1px solid;
-  }
- 
-  .recipe-tag.c { border-color: var(--choco-light); color: #c47a4a; }
-  .recipe-tag.s { border-color: rgba(201,169,110,0.4); color: var(--or-light); }
-  .recipe-tag.r { border-color: rgba(122,62,42,0.6); color: #c47a6a; }
- 
-  .plaque-detail {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    border-top: 1px solid var(--border);
-    padding-top: 0.8rem;
-    margin-top: 0.6rem;
-    line-height: 1.6;
-  }
- 
-  /* TOTAL BAR */
-  .total-section {
-    background: var(--noir-3);
-    border: 1px solid rgba(201,169,110,0.4);
-    padding: 1.6rem 2rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
- 
-  .total-left {}
-  .total-left .total-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.3rem;
-  }
- 
-  .total-nb {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.2rem;
-    font-weight: 300;
-    color: var(--or);
-    line-height: 1;
-  }
- 
-  .total-sub {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    margin-top: 0.2rem;
-  }
- 
-  .total-right {
-    text-align: right;
-  }
- 
-  .total-breakdown {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    line-height: 2;
-    letter-spacing: 0.05em;
-  }
- 
-  .total-breakdown strong {
-    color: var(--creme);
-    font-weight: 400;
-  }
- 
-  /* SURPLUS */
-  .surplus-section {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
- 
-  .surplus-pill {
-    border: 1px solid var(--border);
-    padding: 0.5rem 1rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    font-family: 'Jost', sans-serif;
-  }
- 
-  .surplus-pill.warn {
-    border-color: rgba(196,122,74,0.5);
-    color: #c47a4a;
-    background: rgba(59,31,15,0.3);
-  }
- 
-  .surplus-pill.ok {
-    border-color: rgba(201,169,110,0.3);
-    color: var(--or-light);
-  }
- 
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 2rem;
-    border-top: 1px solid var(--border);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
- 
-  footer .footer-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.9rem;
-    font-style: italic;
-    letter-spacing: 0.1em;
-    color: var(--or);
-    display: block;
-    margin-bottom: 0.4rem;
-  }
- 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
- 
-  /* VISUAL PLATE */
-  .plaque-visual { margin: 0.8rem 0 0.6rem; }
-  .plaque-visual-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-  }
-  .plaque-slots {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-  }
-  .slot {
-    aspect-ratio: 1;
-    border-radius: 3px;
-    border: 1px solid rgba(107,58,31,0.4);
-    background: rgba(59,31,15,0.25);
-    transition: background 0.3s, border-color 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .slot.filled {
-    background: var(--choco-light);
-    border-color: rgba(107,58,31,0.8);
-  }
-  .slot.filled::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 60%);
-  }
-  .slot.empty {
-    background: rgba(59,31,15,0.12);
-    border-color: rgba(107,58,31,0.25);
-    border-style: dashed;
-  }
-  .incomplete-badge {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border: 1px solid rgba(196,122,74,0.5);
-    color: #c47a4a;
-    background: rgba(59,31,15,0.3);
-  }
-  .complete-badge {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border: 1px solid rgba(201,169,110,0.3);
-    color: var(--or-light);
-  }
- 
-  @media (max-width: 600px) {
-    .inputs-grid, .plaques-grid { grid-template-columns: 1fr; }
-    .total-section { grid-template-columns: 1fr; }
-    .total-right { text-align: left; }
-  }
+  @media (max-width: 720px) { .week-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 440px) { .week-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
 </head>
 <body>
  
 <header>
   <div class="header-ornament">
-    <div class="ornament-line"></div>
-    <div class="ornament-diamond"></div>
-    <div class="ornament-line right"></div>
+    <div class="ornament-line"></div><div class="ornament-diamond"></div><div class="ornament-line right"></div>
   </div>
   <h1 class="brand-name">Aux Merveilleux <em>de Fred</em></h1>
-  <p class="brand-sub">Maison fondée à Lille &nbsp;·&nbsp; Artisan depuis 1997</p>
-  <p class="page-title">Calculateur de plaquage — Cramique en pousse</p>
+  <p class="brand-sub">Planning de production — Cramique en pousse</p>
 </header>
  
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="switchTab('saisie')">Saisie semaine</div>
+  <div class="nav-tab" onclick="switchTab('planning')">Planning journalier</div>
+</div>
+ 
 <main>
- 
-  <p class="section-label">Stock disponible</p>
- 
-  <div class="inputs-section">
-    <div class="inputs-grid">
-      <div class="input-card choco">
-        <label>Parfum 01</label>
-        <span class="parfum-name">Chocolat</span>
-        <input type="number" id="in-choco" min="0" value="98" placeholder="0" />
-        <span class="input-unit">pièces</span>
-      </div>
-      <div class="input-card sucre">
-        <label>Parfum 02</label>
-        <span class="parfum-name">Sucre</span>
-        <input type="number" id="in-sucre" min="0" value="79" placeholder="0" />
-        <span class="input-unit">pièces</span>
-      </div>
-      <div class="input-card raisin">
-        <label>Parfum 03</label>
-        <span class="parfum-name">Raisin-Sucre</span>
-        <input type="number" id="in-raisin" min="0" value="11" placeholder="0" />
-        <span class="input-unit">pièces</span>
-      </div>
-    </div>
- 
+  <div class="tab-content active" id="tab-saisie">
+    <br>
+    <p class="section-label">Stock en pousse — nombre de cramiques par jour</p>
+    <div class="week-grid" id="week-grid"></div>
   </div>
  
-  <!-- RESULTS -->
-  <div class="results" id="results">
- 
-    <p class="results-label" style="margin-top:0">Répartition optimisée</p>
- 
-    <div class="plaques-grid">
-      <div class="plaque-card" id="card-s1">
-        <div class="plaque-step">Étape 1</div>
-        <div class="plaque-nb" id="nb-s1">—</div>
-        <div class="plaque-type">Plaques standard</div>
-        <div class="plaque-recipe">
-          <span class="recipe-tag c">3 Choco</span>
-          <span class="recipe-tag s">2 Sucre</span>
-          <span class="recipe-tag r">1 Raisin</span>
-        </div>
-        <div class="plaque-detail" id="det-s1">—</div>
-      </div>
-      <div class="plaque-card" id="card-s2">
-        <div class="plaque-step">Étape 2</div>
-        <div class="plaque-nb" id="nb-s2">—</div>
-        <div class="plaque-type">Plaques mixtes</div>
-        <div class="plaque-recipe">
-          <span class="recipe-tag c">3 Choco</span>
-          <span class="recipe-tag s">3 Sucre</span>
-        </div>
-        <div class="plaque-detail" id="det-s2">—</div>
-      </div>
-      <div class="plaque-card" id="card-s3">
-        <div class="plaque-step">Étape 3</div>
-        <div class="plaque-nb" id="nb-s3">—</div>
-        <div class="plaque-type">Plaques chocolat</div>
-        <div class="plaque-recipe">
-          <span class="recipe-tag c">6 Choco</span>
-        </div>
-        <div class="plaque-detail" id="det-s3">—</div>
-        <div class="plaque-visual" id="visual-s3" style="display:none">
-          <div class="plaque-visual-label">Dernière plaque</div>
-          <div class="plaque-slots" id="slots-s3"></div>
-          <div id="badge-s3"></div>
-        </div>
-      </div>
+  <div class="tab-content" id="tab-planning">
+    <br>
+    <div class="legende">
+      <div class="leg-item"><div class="leg-dot" style="background:#e0956a"></div>M = Mixte (3C + 2S + 1R)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--or-light)"></div>S+C = Sucre+Choco (3C + 3S)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#c08060"></div>C = Chocolat pur (6C)</div>
     </div>
- 
-    <div class="total-section">
-      <div class="total-left">
-        <div class="total-label">Total plaques</div>
-        <div class="total-nb" id="total-nb">—</div>
-        <div class="total-sub" id="total-sub">—</div>
-      </div>
-      <div class="total-right">
-        <div class="total-breakdown" id="total-breakdown">—</div>
-      </div>
+    <div class="btn-row">
+      <button class="print-btn" onclick="window.print()"><span>Imprimer le planning</span></button>
     </div>
- 
-    <div class="surplus-section" id="surplus-section"></div>
- 
+    <p class="section-label">Répartition par créneau</p>
+    <div class="planning-wrap">
+      <table>
+        <thead id="planning-head"></thead>
+        <tbody id="planning-body"></tbody>
+      </table>
+    </div>
   </div>
- 
 </main>
  
-<footer>
-  <span class="footer-brand">Aux Merveilleux de Fred</span>
-  Outil interne de gestion de production
-</footer>
- 
 <script>
-function calculate() {
-  let choco = parseInt(document.getElementById('in-choco').value) || 0;
-  let sucre = parseInt(document.getElementById('in-sucre').value) || 0;
-  let raisin = parseInt(document.getElementById('in-raisin').value) || 0;
+const JOURS = ['Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche','Lundi','Mardi S+1'];
+const MAX = 12;
  
-  // Étape 1 : 3C + 2S + 1RS
-  let p1 = raisin;
-  let c1 = p1 * 3, s1 = p1 * 2;
-  choco -= c1; sucre -= s1;
-  choco = Math.max(0, choco); sucre = Math.max(0, sucre);
- 
-  // Étape 2 : 3C + 3S
-  let p2 = Math.floor(Math.min(sucre / 3, choco / 3));
-  let c2 = p2 * 3, s2 = p2 * 3;
-  choco -= c2; sucre -= s2;
-  choco = Math.max(0, choco); sucre = Math.max(0, sucre);
- 
-  // Étape 3 : 6C
-  let fullP3 = Math.floor(choco / 6);
-  let leftoverC = choco - (fullP3 * 6);
-  let p3 = fullP3 + (leftoverC > 0 ? 1 : 0);
- 
-  let total = p1 + p2 + p3;
-  let totalPieces = p1 * 6 + p2 * 6 + fullP3 * 6 + leftoverC;
- 
-  // Affichage
-  let res = document.getElementById('results');
-  res.classList.add('visible');
- 
-  function setCard(id, nb, det, active) {
-    let card = document.getElementById('card-' + id);
-    card.classList.remove('active', 'inactive');
-    card.classList.add(active ? 'active' : 'inactive');
-    document.getElementById('nb-' + id).textContent = nb > 0 ? nb : '0';
-    document.getElementById('det-' + id).textContent = det;
-  }
- 
-  setCard('s1', p1,
-    p1 > 0 ? p1 + ' × (3C + 2S + 1RS)\n= ' + (p1*3) + ' choco · ' + (p1*2) + ' sucre · ' + p1 + ' raisin' : 'Aucun raisin-sucre disponible',
-    p1 > 0
-  );
- 
-  setCard('s2', p2,
-    p2 > 0 ? p2 + ' × (3C + 3S)\n= ' + (p2*3) + ' choco · ' + (p2*3) + ' sucre' : 'Pas de sucre restant',
-    p2 > 0
-  );
- 
-  setCard('s3', p3,
-    p3 > 0 ? fullP3 + ' plaque(s) complète(s)' + (leftoverC > 0 ? ' + 1 incomplète' : '') : 'Aucun chocolat restant',
-    p3 > 0
-  );
- 
-  // Visual plate for s3
-  let visual = document.getElementById('visual-s3');
-  let slotsEl = document.getElementById('slots-s3');
-  let badgeEl = document.getElementById('badge-s3');
-  if (p3 > 0) {
-    visual.style.display = 'block';
-    slotsEl.innerHTML = '';
-    let lastFill = leftoverC > 0 ? leftoverC : 6;
-    for (let i = 0; i < 6; i++) {
-      let s = document.createElement('div');
-      s.className = 'slot ' + (i < lastFill ? 'filled' : 'empty');
-      slotsEl.appendChild(s);
-    }
-    if (leftoverC > 0) {
-      badgeEl.innerHTML = '<span class="incomplete-badge">Incomplète : ' + leftoverC + ' / 6</span>';
-    } else {
-      badgeEl.innerHTML = '<span class="complete-badge">Toutes complètes</span>';
-    }
-  } else {
-    visual.style.display = 'none';
-  }
- 
-  document.getElementById('total-nb').textContent = total;
-  document.getElementById('total-sub').textContent = total + ' plaque' + (total > 1 ? 's' : '') + ' de 6';
- 
-  let bd = '';
-  if (p1 > 0) bd += '<div>' + p1 + ' standard &nbsp;<strong>' + p1 + ' pl.</strong></div>';
-  if (p2 > 0) bd += '<div>' + p2 + ' mixte' + (p2>1?'s':'') + ' &nbsp;<strong>' + p2 + ' pl.</strong></div>';
-  if (p3 > 0) bd += '<div>' + p3 + ' chocolat &nbsp;<strong>' + p3 + ' pl.</strong></div>';
-  document.getElementById('total-breakdown').innerHTML = bd;
- 
-  // Surplus
-  let sp = document.getElementById('surplus-section');
-  sp.innerHTML = '';
- 
-  if (leftoverC === 0 && sucre === 0) {
-    sp.innerHTML = '<div class="surplus-pill ok">— Aucun surplus, tout est placé</div>';
-  } else {
-    if (leftoverC > 0) {
-      sp.innerHTML += '<div class="surplus-pill warn">Chocolat : ' + leftoverC + ' pièce' + (leftoverC>1?'s':'') + ' non placée' + (leftoverC>1?'s':'') + ' (dernière plaque incomplète)</div>';
-    }
-    if (sucre > 0) {
-      sp.innerHTML += '<div class="surplus-pill warn">Sucre : ' + sucre + ' pièce' + (sucre>1?'s':'') + ' en surplus</div>';
-    }
-  }
+function buildGrid() {
+  const grid = document.getElementById('week-grid');
+  grid.innerHTML = '';
+  JOURS.forEach(j => {
+    grid.innerHTML += `<div class="day-card">
+      <div class="day-name">${j}</div>
+      <div class="day-field"><label><span class="field-dot dot-c"></span>Choco</label>
+        <input type="number" id="${j}-c" min="0" value="0" oninput="buildPlanning()"/></div>
+      <div class="day-field"><label><span class="field-dot dot-s"></span>Sucre</label>
+        <input type="number" id="${j}-s" min="0" value="0" oninput="buildPlanning()"/></div>
+      <div class="day-field"><label><span class="field-dot dot-r"></span>Raisin</label>
+        <input type="number" id="${j}-r" min="0" value="0" oninput="buildPlanning()"/></div>
+    </div>`;
+  });
 }
  
-// Auto-calculate on load
-window.addEventListener('load', calculate);
+function calcPlaques(c, s, r) {
+  let choco = c, sucre = s, raisin = r;
+  // Étape 1 : Mixtes
+  let m = raisin;
+  choco -= m*3; sucre -= m*2;
+  choco = Math.max(0,choco); sucre = Math.max(0,sucre);
+  // Étape 2 : S+C
+  let sc = Math.floor(Math.min(sucre/3, choco/3));
+  choco -= sc*3; sucre -= sc*3;
+  choco = Math.max(0, choco);
+  // Étape 3 : Choco
+  let cFull = Math.floor(choco/6);
+  let cRest = choco - cFull*6; // unités restantes
+  let cPlaques = cFull + (cRest > 0 ? 1 : 0); // nb plaques dont 1 incomplète
+  // Total = plaques complètes seulement (incomplète non comptée)
+  let total = m + sc + cFull;
+  return { m, sc, cFull, cRest, cPlaques, total };
+}
  
-// Live recalc on input
-['in-choco','in-sucre','in-raisin'].forEach(id => {
-  document.getElementById(id).addEventListener('input', calculate);
-});
+function repartir(p) {
+  // M : moitié J-1 (max 12), moitié 13H (max 12), surplus → divisé 6H + 10H
+  let mJ1  = Math.min(Math.ceil(p.m / 2), MAX);
+  let m13h = Math.min(p.m - mJ1, MAX);
+  let mSurplus = p.m - mJ1 - m13h; // ce qui dépasse 24
+  let m6h  = Math.ceil(mSurplus / 2);
+  let m10h = mSurplus - m6h;
+ 
+  // S+C → 6H (max 12 - m6h), débordement → 10H
+  let dispo6h  = MAX - m6h;
+  let sc6h     = Math.min(p.sc, dispo6h);
+  let sc10h    = p.sc - sc6h;
+ 
+  // CHOCO → 10H (max 12 - m10h - sc10h), débordement → 13H
+  let dispo10h = MAX - m10h - sc10h;
+  let c10h     = Math.min(p.cFull, Math.max(0, dispo10h));
+  let cDebord  = p.cFull - c10h;
+ 
+  return {
+    'J-1' : { m: mJ1,  sc: 0,     c: 0,      cRest: 0,       total: mJ1 },
+    '6H'  : { m: m6h,  sc: sc6h,  c: 0,      cRest: 0,       total: m6h + sc6h },
+    '10H' : { m: m10h, sc: sc10h, c: c10h,   cRest: p.cRest, total: m10h + sc10h + c10h },
+    '13H' : { m: m13h, sc: 0,     c: cDebord, cRest: 0,       total: m13h + cDebord },
+  };
+}
+ 
+function buildPlanning() {
+  const data = JOURS.map(j => {
+    const c = parseInt(document.getElementById(j+'-c').value)||0;
+    const s = parseInt(document.getElementById(j+'-s').value)||0;
+    const r = parseInt(document.getElementById(j+'-r').value)||0;
+    const p = calcPlaques(c,s,r);
+    return { jour: j, c, s, r, p, rep: repartir(p) };
+  });
+ 
+  // HEAD
+  let head = `
+    <tr class="head-jours">
+      <th class="th-creneau">Créneau</th>
+      ${data.map(d=>`<th class="${d.jour==='Mardi S+1'?'th-nextweek':''}">${d.jour==='Mardi S+1'?'Mardi <span style="font-size:0.7rem;font-style:normal;letter-spacing:0.15em;color:var(--or);opacity:0.8">S+1</span>':d.jour}</th>`).join('')}
+    </tr>
+    <tr class="head-besoin">
+      <th class="th-creneau">Besoin</th>
+      ${data.map(d=>`<th class="${d.jour==='Mardi S+1'?'th-nextweek':''}"><span class="besoin-val">${d.p.total > 0 ? d.p.total : '—'}</span>plaques</th>`).join('')}
+    </tr>`;
+  document.getElementById('planning-head').innerHTML = head;
+ 
+  // BODY
+  const CRENEAUX = [
+    { id:'J-1', label:'J-1',  desc:'Veille' },
+    { id:'6H',  label:'6H',   desc:'Matin' },
+    { id:'10H', label:'10H',  desc:'Mi-journée' },
+    { id:'13H', label:'13H',  desc:'Après-midi' },
+  ];
+ 
+  let body = '';
+  CRENEAUX.forEach(cr => {
+    body += `<tr><td class="cr-label"><span class="cr-time">${cr.label}</span><span class="cr-desc">${cr.desc}</span></td>`;
+    data.forEach(d => {
+      const r = d.rep[cr.id];
+      const warn = r.total > MAX;
+      let html = '';
+ 
+      if (cr.id === 'J-1') {
+        if (r.m > 0) html = `<div class="cell-block"><span class="cell-nb">${r.m}</span><span class="cell-type type-m">M</span></div>`;
+        else html = '<span class="cell-empty">—</span>';
+      } else if (cr.id === '6H') {
+        if (r.m > 0 || r.sc > 0) {
+          html = '<div class="cell-block">';
+          if (r.m  > 0) html += `<span class="cell-nb">${r.m}</span><span class="cell-type type-m">M</span>`;
+          if (r.sc > 0) html += `<span class="cell-nb" style="margin-top:4px">${r.sc}</span><span class="cell-type type-sc">S+C</span>`;
+          html += '</div>';
+        } else html = '<span class="cell-empty">—</span>';
+      } else if (cr.id === '10H') {
+        if (r.m > 0 || r.sc > 0 || r.c > 0 || r.cRest > 0) {
+          html = '<div class="cell-block">';
+          if (r.m  > 0) html += `<span class="cell-nb">${r.m}</span><span class="cell-type type-m">M</span>`;
+          if (r.sc > 0) html += `<span class="cell-nb" style="margin-top:4px">${r.sc}</span><span class="cell-type type-sc">S+C</span>`;
+          if (r.c  > 0) html += `<span class="cell-nb" style="margin-top:4px">${r.c}</span><span class="cell-type type-c">CHOCO</span>`;
+          if (r.cRest > 0) html += `<span class="cell-extra">+ ${r.cRest} unité${r.cRest>1?'s':''}</span>`;
+          html += '</div>';
+        } else html = '<span class="cell-empty">—</span>';
+      } else if (cr.id === '13H') {
+        if (r.m > 0 || r.c > 0) {
+          html = '<div class="cell-block">';
+          if (r.m > 0) html += `<span class="cell-nb">${r.m}</span><span class="cell-type type-m">M</span>`;
+          if (r.c > 0) html += `<span class="cell-nb" style="margin-top:4px">${r.c}</span><span class="cell-type type-c">CHOCO</span>`;
+          html += '</div>';
+        } else html = '<span class="cell-empty">—</span>';
+      }
+ 
+      if (warn) html += `<div class="cell-warn">⚠ ${r.total} pl.</div>`;
+      body += `<td class="${d.jour==='Mardi S+1'?'td-nextweek':''}">${html}</td>`;
+    });
+    body += '</tr>';
+  });
+ 
+  // Total row
+  body += `<tr class="row-total"><td class="cr-label"><span class="cr-time" style="font-style:normal;font-size:0.9rem;letter-spacing:0.1em">Total</span><span class="cr-desc">Journée</span></td>`;
+  data.forEach(d => {
+    body += `<td><span class="total-nb">${d.p.total > 0 ? d.p.total : '—'}</span><span class="total-sub">${d.p.total > 0 ? d.p.total*6 + ' pcs' : ''}</span></td>`;
+  });
+  body += '</tr>';
+ 
+  document.getElementById('planning-body').innerHTML = body;
+}
+ 
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', ['saisie','planning'][i]===tab));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if (tab === 'planning') buildPlanning();
+}
+ 
+buildGrid();
+buildPlanning();
 </script>
- 
 </body>
 </html>
  
